@@ -14,10 +14,11 @@ export class App extends Component {
     imgName: '',
     page: 1,
     error: null,
-    status: 'idle',
     largeImageURL: '',
+    showModal: false
 
   };
+
   componentDidUpdate(_, prevState) {
         const { page, imgName } = this.state;
         if (prevState.page !== page || prevState.imgName !== imgName) {
@@ -41,19 +42,27 @@ export class App extends Component {
          if (this.state.imgName !== imgName) {
             this.setState({ imgName, page: 1, searchImages: [] });
         }
+  };
+  
+  toggleModal = () => {
+    this.setState(({showModal}) => ({
+      showModal: !showModal
+    }))
+  }
+    onImgClick = img => {
+        this.setState({ largeImageURL: img });
+        this.toggleModal();
     };
-
-
   render() {
-    const { searchImages, error, loading} = this.state;
+    const { searchImages, error, loading, largeImageURL, showModal} = this.state;
     const isSearchImages = Boolean(searchImages.length);
     return (
     <div className={styles.app}>
         <Searchbar onSubmit={this.handleFormSubmit} />
         {loading && <Loader />}
         {error && <p>Restart page or modify the request</p>}
-        {isSearchImages && <ImageGallery searchImages={searchImages} />}
-        <Modal/>
+        {isSearchImages && <ImageGallery searchImages={searchImages} onImgClick={this.onImgClick} />}
+        {showModal && <Modal largeImageURL={largeImageURL} />}
     </div>
  ) 
 }

@@ -5,15 +5,15 @@ import {ImageGalleryItem} from '../ImageGalleryItem/ImageGalleryItem';
 
 
 
-export function ImageGallery({ searchImages, largeImageURL })  {
+export function ImageGallery({ searchImages, onImgClick })  {
   return (
       <ul className={styles.gallery}>
-          {searchImages.map(({ webformatURL, id, tags, largeImageURL }) => (
+          {searchImages.map(({ webformatURL, id, largeImageURL}) => (
              <ImageGalleryItem
                   key={id}
                   webformatURL={webformatURL}
-                  tags={tags}
-                  largeImageURL={largeImageURL} 
+                  onImgClick={onImgClick} 
+                  largeImageURL = {largeImageURL}
               />
           ))}
       </ul>
@@ -26,5 +26,5 @@ ImageGallery.propTypes = {
             id: PropTypes.number.isRequired
         })
     ),
-    largeImageURL: PropTypes.func.isRequired,
+    onImgClick: PropTypes.func.isRequired,
 };

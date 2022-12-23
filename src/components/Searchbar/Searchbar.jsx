@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styles from "./Searchbar.module.css";
 import Notiflix from 'notiflix';
+import PropTypes from 'prop-types';
 
 export class Searchbar extends Component {
     state = {
@@ -46,9 +47,9 @@ handleSubmit = e => {
   }
 }
 
-// PhonebookForm.propTypes = {
-//   onSubmit: PropTypes.func.isRequired,
-// };
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
 
 
 

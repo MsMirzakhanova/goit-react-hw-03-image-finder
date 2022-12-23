@@ -5,7 +5,7 @@ import { fetchImages } from './fetchimages';
 import { Searchbar } from './Searchbar/Searchbar';
 import {Modal} from './Modal/Modal';
 import {ImageGallery} from './ImageGallery/ImageGallery';
-
+import { Button } from './Button/Button';
 
 
 export class App extends Component {
@@ -45,10 +45,16 @@ export class App extends Component {
   };
   
   toggleModal = () => {
-    this.setState(({showModal}) => ({
+    this.setState(({ showModal }) => ({
       showModal: !showModal
-    }))
-  }
+    }));
+  };
+
+    loadMore = () => {
+        this.setState(({ page }) => {
+            return { page: page + 1 }
+        })
+    };
     onImgClick = img => {
         this.setState({ largeImageURL: img });
         this.toggleModal();
@@ -62,7 +68,8 @@ export class App extends Component {
         {loading && <Loader />}
         {error && <p>Restart page or modify the request</p>}
         {isSearchImages && <ImageGallery searchImages={searchImages} onImgClick={this.onImgClick} />}
-        {showModal && <Modal largeImageURL={largeImageURL} />}
+        {isSearchImages  && <Button onClick={this.loadMore} />}
+        {showModal && (<Modal onClose={this.toggleModal} largeImageURL={largeImageURL} />)}
     </div>
  ) 
 }
